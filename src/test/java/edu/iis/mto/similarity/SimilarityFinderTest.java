@@ -5,6 +5,8 @@ import edu.iis.mto.search.SequenceSearcher;
 import org.junit.Assert;
 import org.junit.Test;
 
+import javax.naming.directory.SearchResult;
+
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
@@ -16,7 +18,7 @@ public class SimilarityFinderTest {
         similarityFinder = new SimilarityFinder((key, seq) ->  SearchResult.builder().build());
         int[] collection1 = {};
         int[] collection2 = {};
-        Assert.assertThat(1.0d, is(equalTo(similarityFinder.calculateJackardSimilarity(collection1, collection2))));
+        Assert.assertThat(similarityFinder.calculateJackardSimilarity(collection1, collection2), is(equalTo(1.0d)));
     }
 
     @Test
@@ -24,7 +26,7 @@ public class SimilarityFinderTest {
         similarityFinder = new SimilarityFinder((key, seq) -> SearchResult.builder().withFound(false).build());
         int[] collection1 = {1,2,3};
         int[] collection2 = {4,5,6};
-        Assert.assertThat(0d, is(equalTo(similarityFinder.calculateJackardSimilarity(collection1, collection2))));
+        Assert.assertThat(similarityFinder.calculateJackardSimilarity(collection1, collection2), is(equalTo(0d)));
     }
 
     @Test
@@ -36,7 +38,7 @@ public class SimilarityFinderTest {
         });
         int[] collection1 = {1,2,3,4};
         int[] collection2 = {1,2,3,4};
-        Assert.assertThat(1d, is(equalTo(similarityFinder.calculateJackardSimilarity(collection1, collection2))));
+        Assert.assertThat(similarityFinder.calculateJackardSimilarity(collection1, collection2), is(equalTo(1d)));
     }
 
     @Test
@@ -48,7 +50,7 @@ public class SimilarityFinderTest {
         });
         int[] collection1 = {1,2,3,4};
         int[] collection2 = {2,3,5};
-        Assert.assertThat(0.4d, is(equalTo(similarityFinder.calculateJackardSimilarity(collection1, collection2))));
+        Assert.assertThat(similarityFinder.calculateJackardSimilarity(collection1, collection2), is(equalTo(0.4d)));
     }
 
     @Test
